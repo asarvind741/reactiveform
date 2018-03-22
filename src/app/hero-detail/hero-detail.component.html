@@ -1,0 +1,70 @@
+<form class="form-inline" [formGroup]="heroForm" (ngSubmit)="onSubmitForm()" novalidate>
+  <div class="form-group">
+    <label class="control-label" >Name:
+      <input class="form-control" formControlName="name">
+      <!-- <div class="col-sm-6 text-danger" *ngIf="heroForm.controls.name.invalid && heroForm.controls.name.touched">
+        Please Enter a name with minimum of 4 Characters and maximum of 10 Characters
+      </div> -->
+      <div class="col-sm-6 text-danger" *ngIf=" name.invalid && name.touched">
+        <div *ngIf="name.errors?.required"> Name Field Can't be blank</div>
+        <div *ngIf="name.errors?.minlength"> Name should have minimum length 4</div>
+      </div>
+    </label>
+  </div>
+  <br>
+  <div class="form-group">
+    <label class="control-label">Email:
+      <input class="form-control" formControlName="email">
+      <!-- <div *ngIf="heroForm.controls.email.invalid && heroForm.controls.email.touched">
+        Please Enter correct Email id
+      </div> -->
+      <div class="col-sm-6 text-danger" *ngIf=" email.invalid && email.touched">
+        <div *ngIf="email.errors?.required"> Email Field Can't be blank</div>
+        <div *ngIf="email.errors?.pattern"> Please Enter correct Email Id</div>
+      </div>
+    </label>
+  </div>
+  <br>
+  <div class="form-group">
+    <label class="control-label required">Street:
+      <input class="form-control" formControlName="street">
+      <!-- <div *ngIf="heroForm.controls.street.invalid && heroForm.controls.street.touched">
+        Please Enter Your Street
+      </div> -->
+      <div class="col-sm-6 text-danger" *ngIf=" street.invalid && street.touched">
+        <div *ngIf="street.errors?.required"> Street Field Can't be blank</div>
+      </div>
+    </label>
+  </div>
+  <br>
+  <div class="form-group">
+    <label class="control-label">City:
+      <input class="form-control" formControlName="city">
+      <!-- <div *ngIf = "heroForm.controls.city.invalid && heroForm.controls.city.touched">
+          Please Enter Your City
+                    </div> -->
+      <div class="col-sm-6 text-danger" *ngIf=" city.invalid && city.touched">
+        <div *ngIf="city.errors?.required"> City Field Can't be blank</div>
+      </div>
+    </label>
+  </div>
+  <br>
+  <div class="form-group">
+    <label class="control-label">State:
+      <select class="form-control" formControlName="state">
+        <option *ngFor="let state of states" [value]="state">{{state}}</option>
+      </select>
+      <!-- <div *ngIf="heroForm.controls.state.invalid && heroForm.controls.state.touched">
+        Please Select Your State
+      </div> -->
+      <div class="col-sm-6 text-danger" *ngIf =" state.invalid && state.touched">
+          <div *ngIf = "name.errors?.required"> State Field Can't be blank</div>
+        </div>
+    </label>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary" [disabled]="!heroForm.valid">Submit</button>
+</form>
+
+<p>Form value: {{ heroForm.value | json }}</p>
+<p>Form status: {{ heroForm.status | json }}</p>

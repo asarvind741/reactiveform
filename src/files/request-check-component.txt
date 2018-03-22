@@ -1,0 +1,90 @@
+import { Component } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SubareaVerifierRequestCreateService } from '../services/subarea-verifier-request-check.service';
+import { RequestCreateInterface } from '../models/request-check.interface';
+
+import { CountriesAlpha2Codes } from './countrires-alpha-2-codes';
+
+@Component({
+    selector: 'subarea-verifier-request-check',
+    templateUrl: './subarea-verifier-request-check.component.html',
+    styleUrls: ['./subarea-verifier-request-check.component.html']
+})
+
+export class SubareaVerifierRequestCheckComponent {
+    country: Boolean = false;
+    companies: Boolean = false;
+    contacts: Boolean = false;
+    data: RequestCreateInterface[];
+    form: FormGroup;
+    menuTitle: String = 'Diesen Eintrag';
+    menuListOption: Array<String>;
+    errorMessage: Boolean = false;
+
+    displayedColumns = ['check', 'status'];
+
+    constructor(private requestCreateService: SubareaVerifierRequestCreateService,
+        private fb: FormBuilder) {
+        this.getRequestCreateMockData();
+        this.createForm();
+        this.getContactMenuList();
+
+    }
+    click1() {
+        this.country = !this.country;
+    }
+    click2() {
+        this.companies = !this.companies;
+    }
+    click3() {
+        this.contacts = !this.contacts;
+    }
+
+    getRequestCreateMockData() {
+        this.requestCreateService.getData().subscribe((response: RequestCreateInterface[]) => {
+            this.data = response;
+            console.log(this.data);
+        });
+    }
+
+
+    createForm() {
+        this.form = this.fb.group({
+            firstName: ['', Validators.required],
+            lastName: ['', Validators.required],
+            authorization: ['', Validators.required],
+            email: ['', Validators.required],
+            mobile: ['', Validators.required],
+            landlineNumber: ['', Validators.required],
+        })
+    };
+
+    getContactMenuList() {
+        this.requestCreateService.getContactMenu().subscribe((response: any) => {
+            this.menuListOption = response;
+
+        })
+    }
+
+    keys(): any {
+        var keys = this.menuListOption;
+        return keys.slice(keys.length / 2);
+
+    }
+
+    autherize(autherization): Array<String> {
+        var autherize = Object.keys(autherization);
+        return autherize;
+
+    }
+
+    formInvalidField() {
+        this.errorMessage = !this.errorMessage;
+    }
+
+    getAlpha2Code(countryName: string): string {
+        return CountriesAlpha2Codes[countryName.toLowerCase()];
+    }
+
+
+}

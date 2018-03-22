@@ -1,0 +1,359 @@
+<div *ngFor="let auditor of auditors; let j = index;">
+
+
+  <!-- if selected as yes -->
+  <mat-card *ngIf="auditor.isContactConfirmed">
+    <mat-card-title>
+      <strong>Component Auditor {{j+1}}</strong> ({{ auditor.componentAuditorName }})
+    </mat-card-title>
+    <mat-card-content>
+      <div *ngIf="form1">
+        <form [formGroup]="form1">
+          <div>
+            <h3>Is this information correct?</h3>
+            <mat-radio-group>
+              <mat-radio-button [(value)]="auditor.isContactConfirmed" (click)="auditor.isContactConfirmed = true" [checked]="auditor.isContactConfirmed === true">Yes</mat-radio-button>
+              <mat-radio-button [(value)]="!auditor.isContactConfirmed" (click)="auditor.isContactConfirmed =false" [checked]="auditor.isContactConfirmed === false">No</mat-radio-button>
+            </mat-radio-group>
+            <div *ngIf="!auditor.isContactConfirmed">
+              <button matButton>
+                <mat-checkbox>delete this user</mat-checkbox>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </mat-card-content>
+
+    <mat-table #table [dataSource]="auditor.contacts">
+      <ng-container matColumnDef="firstName">
+        <mat-header-cell *matHeaderCellDef class="text-sm-left">
+          First Name
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-sm-left">
+          {{element.firstName}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <mat-header-cell *matHeaderCellDef class="text-sm-left">
+          Last Name
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-sm-left">
+          {{element.lastName}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="autherization">
+        <mat-header-cell *matHeaderCellDef class="text-sm-left">
+          Authorization
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-sm-left">
+          {{element.autherization}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef class="text-sm-left">
+          E-Mail
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-sm-left">
+          {{element.email}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="mobile">
+        <mat-header-cell *matHeaderCellDef class="text-sm-left">
+          Mobile
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-sm-left">
+          {{element.mobile }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="landline">
+        <mat-header-cell *matHeaderCellDef class="text-sm-left">
+          Landline Number
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-sm-left">
+          {{element.landline }}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      <button></button>
+    </mat-table>
+  </mat-card>
+
+  <!-- if selected as no -->
+
+  <!-- <mat-card mat-card *ngIf="!auditor.isContactConfirmed">
+    <mat-card-title>
+      <strong>Component Auditor {{index+1}}</strong> ({{ auditor.componentAuditorName }})
+    </mat-card-title>
+    <mat-card-content *ngFor="let contact of auditor.contacts">
+      <div *ngIf="form1">
+        <form [formGroup]="form1">
+          <mat-grid-list cols="15">
+            <mat-grid-tile colspan="">
+            </mat-grid-tile>
+            <mat-grid-tile colspan="2">
+              <mat-form-field class="full-width">
+                <input class="full-width" matInput placeholder="First Name" [value]="contact.firstName" formControlName="firstName" required/>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="2">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Last Name" [value]="contact.lastName" formControlName="lastName" required/>
+
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="2">
+              <mat-form-field class="full-width">
+
+                <mat-select placeholder="Autherization">
+                  <mat-option *ngFor="let berechtigungOptions of autherize()" [value]="berechtigungOptions">
+                    {{ berechtigungOptions }}
+                  </mat-option>
+                </mat-select>
+
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="2">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="E-Mail" [value]="contact.email" formControlName="email" required/>
+
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="2">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Mobile" [value]="contact.mobile" formControlName="mobile" required/>
+
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="2">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Landline Number" [value]="contact.landline" formControlName="landlineNumber" required/>
+
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="6">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Comment" [value]="auditor.comment" formControlName="comment" required/>
+
+              </mat-form-field>
+            </mat-grid-tile>
+
+
+          </mat-grid-list>
+        </form>
+      </div>
+    </mat-card-content>
+  </mat-card>
+ -->
+  <!-- if addition -->
+  <div>&nbsp;</div>
+
+  <div *ngIf="form1">
+    <form [formGroup]="form1">
+      <div formArrayName="newAuditors">
+        <mat-card *ngFor="let newAuditor of form1.controls.newAuditors.controls; let i = index" [formGroupName]="i">
+
+          <mat-card-content>
+            <div *ngIf="form1">
+              <form [formGroup]="form1">
+                <div>
+                  <h3>Is this information correct?</h3>
+                  <mat-radio-group>
+                    <mat-radio-button [(value)]="isContactConfirmed" (click)="isContactConfirmed = true" [checked]="isContactConfirmed === true">Yes</mat-radio-button>
+                    <mat-radio-button [(value)]="!isContactConfirmed" (click)="isContactConfirmed = false" [checked]="isContactConfirmed === false">No</mat-radio-button>
+                  </mat-radio-group>
+                  <div *ngIf="!auditor.isContactConfirmed">
+                    <button matButton>
+                      <mat-checkbox>delete this user</mat-checkbox>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </mat-card-content>
+
+          <mat-card-title>
+            <strong>Component Auditor {{ i + (j+1) + 1}}</strong> ({{ auditor.componentAuditorName }})
+          </mat-card-title>
+          <mat-card-content>
+            <mat-grid-list cols="15">
+              <mat-grid-tile colspan="">
+              </mat-grid-tile>
+              <mat-grid-tile colspan="2">
+                <mat-form-field class="full-width">
+                  <input class="full-width" matInput placeholder="First Name" formControlName="firstName" required/>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile colspan="2">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Last Name" formControlName="lastName" required/>
+
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile colspan="2">
+                <mat-form-field class="full-width">
+
+                  <mat-select placeholder="Autherization" formControlName="authorization">
+                    <mat-option *ngFor="let berechtigungOptions of autherize()">
+                      {{ berechtigungOptions }}
+                    </mat-option>
+                  </mat-select>
+
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile colspan="2">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="E-Mail" formControlName="email" required/>
+
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile colspan="2">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Mobile" formControlName="mobile" required/>
+
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile colspan="2">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Landline Number" formControlName="landlineNumber" required/>
+
+                </mat-form-field>
+              </mat-grid-tile>
+
+              <mat-grid-tile colspan="6">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Comment" formControlName="comment" required/>
+
+                </mat-form-field>
+              </mat-grid-tile>
+
+
+            </mat-grid-list>
+          </mat-card-content>
+
+          <!-- <mat-card-content>
+            <button mat-raised-button color="gray" (click)="addNewComponentAuditor()">
+              + Add new component auditor
+            </button>
+          </mat-card-content> -->
+
+        </mat-card>
+      </div>
+    </form>
+  </div>
+  <!--  -->
+
+</div>
+<div>&nbsp;</div>
+<!-- -------------------------------------------------------------------------------- -->
+<mat-card>
+  <mat-card-content>
+    <button mat-raised-button color="gray" (click)="addNewComponentAuditor()">
+      + Add new component auditor
+    </button>
+  </mat-card-content>
+</mat-card>
+
+<div>&nbsp;</div>
+
+<div>
+
+  <mat-card class="card-content-devided">
+    <mat-card-content>
+      <div class="col-15">
+        <h3>This verifcation was provided by:</h3>
+      </div>
+      <form [formGroup]="form2">
+        <mat-grid-list cols="15">
+          <mat-grid-tile colspan="3">
+            <mat-form-field>
+              <input matInput placeholder="First Name" formControlName="firstName" required/>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="3">
+            <mat-form-field>
+              <input matInput placeholder="Last Name" formControlName="lastName" required/>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="3">
+            <mat-form-field>
+              <input matInput placeholder="Job Title" formControlName="jobTitle" required/>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="15">
+          <mat-grid-tile colspan="12">
+            <mat-form-field>
+              <input matInput placeholder="Name of Audit Firm" formControlName="companyName" required/>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="15">
+          <mat-grid-tile colspan="3">
+            <mat-form-field>
+              <input matInput placeholder="City" formControlName="city" required/>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="3">
+            <mat-form-field>
+              <input matInput placeholder="Country" formControlName="country" required/>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="3">
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="Date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="15">
+          <mat-grid-tile colspan="12">
+            <mat-form-field>
+              <input matInput placeholder="Comment" formControlName="comment" required/>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div>
+  <mat-card>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-15">
+          <p class="mb-0">Kind regards</p>
+          <p class="mb-0">[Verantwortlicher WP]</p>
+          <p class="mb-0">[WP Gesellschaft]</p>
+          <p>[Straﬂe, Hausnummer]</p>
+          <p>[Stadt]</p>
+          <p>Germany</p>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content class="pb-0">
+      <div class="row">
+        <div class="col-15">
+          <div class="button-row d-flex flex-wrap justify-content-md-end">
+            <button mat-raised-button color="primary" class="wide" (click)="verifyData()">
+              VERIFY DATA
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

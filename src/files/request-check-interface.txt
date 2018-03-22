@@ -1,0 +1,31 @@
+export interface Contact {
+    vorname: String;
+    nachname: String;
+    berechtigung: Berechtigung;
+    email: String;
+    handynummer: String;
+    festnetznummer: String;
+}
+
+export interface Company {
+    company: String;
+    contacts: Contact[];
+}
+
+export interface Berechtigung {
+    Partner: String,
+    Manager: String,
+    Staff: String
+}
+
+
+export interface RequestCreateInterface {
+    country: String;
+    flag: String;
+    companies: Company[];
+}
+
+
+export  enum ContactMenu {
+ ' selbst verifziern ', ' in Kontakte übertragen ', ' Löschen '
+}

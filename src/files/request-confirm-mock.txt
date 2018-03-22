@@ -1,0 +1,22 @@
+import { Auditors } from './request-confirm-contact-interface';
+import { Berechtigung } from './request-check.interface';
+
+export const AuditorMockData: Auditors[] = [{
+    componentAuditorName: 'Mueller France Societé',
+    isContactConfirmed: true,
+    contacts: [
+        {
+            firstName: 'Cédric',
+            lastName: 'Montagne',
+            autherization: 'Parner',
+            email: 'cedric.montagne@muller.fr',
+            mobile: '0033 74456338',
+            landline: '465466565656',
+        },
+
+    ],
+    comment: 'comment here...'
+}]
+
+export const BerechtigungOptions:Berechtigung =
+ { 'Partner':'first', 'Manager': 'second' , Staff:'third'}

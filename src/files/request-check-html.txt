@@ -1,0 +1,128 @@
+<mat-card>
+        <dvtx-import-details-form-component [error]="errorMessage"></dvtx-import-details-form-component>
+    
+        <mat-card-title>Übersicht der Teilbereichsprüfer</mat-card-title>
+        <mat-card-content class="mat-card-content-local">
+            <mat-grid-list cols="15">
+                <mat-grid-tile colspan="1">
+                    <mat-checkbox></mat-checkbox>
+                </mat-grid-tile>
+                <mat-grid-tile colspan="12">
+                </mat-grid-tile>
+                <mat-grid-tile colspan="1">
+                    Status
+                </mat-grid-tile>
+                <mat-grid-tile colspan="1">
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <span> {{ menuTitle }}</span>
+                        <button mat-menu-item *ngFor="let option of keys()">
+                            <span>{{option}}</span>
+                        </button>
+                    </mat-menu>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </mat-card-content>
+    
+        <mat-expansion-panel expanded='false' hideToggle="true" (click)="click1()" *ngFor=" let item of data">
+    
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon>{{country ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</mat-icon>
+                    <div>
+                        <mat-checkbox>
+                            <span class="flag-icon flag-icon-{{getAlpha2Code(item.country)}}"></span>{{ item.country }}</mat-checkbox>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+    
+            <mat-expansion-panel expanded='false' hideToggle="true" (click)="click2()" *ngFor=" let company of item.companies">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon>{{companies ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</mat-icon>
+                        <div>
+                            <mat-checkbox>{{ company.company }}</mat-checkbox>
+                        </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-expansion-panel expanded='false' hideToggle="true" (click)="click3()">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <mat-icon>{{contacts ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</mat-icon>
+                            <div>
+                                <mat-checkbox>Ansprechpartner</mat-checkbox>
+                            </div>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let contact of company.contacts">
+                        
+                        <form [formGroup]="form">
+                            <mat-grid-list cols="15">
+                                <mat-grid-tile colspan="">
+                                    <mat-checkbox></mat-checkbox>
+                                </mat-grid-tile>
+                                <mat-grid-tile colspan="2">
+                                    <mat-form-field class="full-width">
+                                        <input class="full-width" matInput placeholder="Vorname" [value]="contact.vorname" formControlName="firstName" required/>
+                                        <mat-error *ngIf="!form.get('lastName').hasError('required')"></mat-error>
+                                    </mat-form-field>
+                                </mat-grid-tile>
+                                <mat-grid-tile colspan="2">
+                                    <mat-form-field class="full-width">
+                                        <input matInput placeholder="Nachname" [value]="contact.nachname" formControlName="lastName" required/>
+                                        <mat-error *ngIf="!form.get('lastName').hasError('required')"></mat-error>
+                                    </mat-form-field>
+                                </mat-grid-tile>
+                                <mat-grid-tile colspan="2">
+                                    <mat-form-field class="full-width">
+                                        <!-- <input matInput placeholder="Berechtigung" formControlName="authorization" /> -->
+    
+                                        <mat-select placeholder="Berechtigung">
+                                            <mat-option *ngFor="let berechtigung of autherize(contact.berechtigung)" [value]="berechtigung">
+                                                {{ berechtigung }}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="!form.get('lastName').hasError('required')"></mat-error>
+                                    </mat-form-field>
+                                </mat-grid-tile>
+                                <mat-grid-tile colspan="2">
+                                    <mat-form-field class="full-width">
+                                        <input matInput placeholder="E-Mail" [value]="contact.email" formControlName="email" required/>
+                                        <mat-error *ngIf="!form.get('lastName').hasError('required')"></mat-error>
+                                    </mat-form-field>
+                                </mat-grid-tile>
+                                <mat-grid-tile colspan="2">
+                                    <mat-form-field class="full-width">
+                                        <input matInput placeholder="Handynummer" [value]="contact.handynummer" formControlName="mobile" required/>
+                                        <mat-error *ngIf="!form.get('lastName').hasError('required')"></mat-error>
+                                    </mat-form-field>
+                                </mat-grid-tile>
+                                <mat-grid-tile colspan="2">
+                                    <mat-form-field class="full-width">
+                                        <input matInput placeholder="Festnetznummer" [value]="contact.festnetznummer" formControlName="landlineNumber" required/>
+                                        <mat-error *ngIf="!form.get('lastName').hasError('required')"></mat-error>
+                                    </mat-form-field>
+                                </mat-grid-tile>
+                                <mat-grid-tile colspan="1">
+                                    status
+                                </mat-grid-tile>
+                                <mat-grid-tile colspan="1">
+                                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <span> {{ menuTitle }}</span>
+                                        <button mat-menu-item *ngFor="let option of keys()">
+                                            <span>{{option}}</span>
+                                        </button>
+                                    </mat-menu>
+                                </mat-grid-tile>
+                            </mat-grid-list>
+                        </form>
+                    </div>
+                </mat-expansion-panel>
+            </mat-expansion-panel>
+        </mat-expansion-panel>
+    </mat-card>

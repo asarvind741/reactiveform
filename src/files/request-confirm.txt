@@ -1,0 +1,118 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import { DataSource } from '@angular/cdk/collections';
+
+import { Auditors } from '../models/request-confirm-contact-interface';
+import { AuditorMockData } from '../models/request-confirm-contact.mock';
+import { SubareaVerifierRequestConfirmService } from '../services/subarea-verifier-request-confirm.service'
+
+import { Berechtigung } from '../models/request-check.interface';
+import { BerechtigungOptions } from '../models/request-confirm-contact.mock';
+
+@Component({
+  selector: 'subarea-verfier-request-confirm',
+  templateUrl: './subarea-verfier-request-confirm.component.html',
+  styleUrls: ['./subarea-verfier-request-confirm.component.scss']
+})
+export class SubareaVerifierRequestConfirmComponent implements OnInit {
+
+  addNewAuditor: Boolean = false;
+
+
+  auditors: Auditors[];
+  form1: FormGroup;
+  form2: FormGroup;
+  fb_array: FormArray;
+
+  berechtigungOptions: Berechtigung= BerechtigungOptions;
+
+  displayedColumns = ['firstName', 'lastName', 'autherization', 'email', 'mobile', 'landline'];
+
+  constructor(private subverifierRequestConfirm: SubareaVerifierRequestConfirmService,
+    private fb: FormBuilder) {
+    this.createForm();
+
+  }
+
+  ngOnInit() {
+    this.getContactData();
+    //this.createForm2();
+    this.form1 = this.fb.group({
+      newAuditors: this.fb.array([/* this.createForm2() */])
+    });
+
+  }
+
+  getContactData() {
+    this.subverifierRequestConfirm.getContactData().subscribe((response: Auditors[]) => {
+      this.auditors = response;
+      console.log(this.auditors);
+    })
+  }
+
+  addNewComponentAuditor() {
+    //this.addNewAuditor = true;
+    const control = <FormArray>this.form1.controls['newAuditors'];
+    control.push(this.createForm2());
+    console.log('controls are----', control.controls);
+  }
+
+  createForm() {
+    this.form2 = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      jobTitle: ['', Validators.required],
+      companyName: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
+      date: ['', Validators.required],
+      comment: ['', Validators.required]
+
+
+    })
+  }
+
+  /* createForm2() {
+    this.form1 = this.fb.group({
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        authorization: ['', Validators.required],
+        email: ['', Validators.required],
+        mobile: ['', Validators.required],
+        landlineNumber: ['', Validators.required],
+        comment: ['', Validators.required]
+    })
+};
+ */
+
+  verifyData(){
+    console.log("data verified");
+    console.log(this.form2.value, this.form1.value)
+  }
+
+  autherize(){
+    
+    var autherize = Object.keys(this.berechtigungOptions);
+    return autherize;
+  }
+
+
+  
+
+  createForm2() {
+    return this.fb.group({
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        authorization: ['', Validators.required],
+        email: ['', Validators.required],
+        mobile: ['', Validators.required],
+        landlineNumber: ['', Validators.required],
+        comment: ['', Validators.required]
+    })
+};
+
+isContactConfirmed: Boolean = false;
+
+ 
+}

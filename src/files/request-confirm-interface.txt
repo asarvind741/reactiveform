@@ -1,0 +1,16 @@
+export interface Contact {
+  firstName: String;
+  lastName: String;
+  autherization: String;
+  email: String;
+  mobile: String;
+  landline: String;
+}
+
+
+export interface Auditors {
+  componentAuditorName: String;
+  isContactConfirmed?: Boolean;
+  contacts:Contact[];
+  comment: String;
+}

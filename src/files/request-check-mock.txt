@@ -1,0 +1,75 @@
+import { RequestCreateInterface } from './request-check.interface';
+
+export const RequestCreateMockData: RequestCreateInterface[] = [{
+    country: 'France',
+    flag: "assets/img/france.png",
+    companies: [{
+        company: ' Mueller France Societé civile',
+        contacts: [{
+            vorname: 'Cédric', nachname: 'Montagne', berechtigung: { 'Partner':'first', 'Manager': 'second' , Staff:'third'}, email: 'cedric.montagne@muller.fr', handynummer: '0033 74456338',
+            festnetznummer: ''
+        },
+        {
+            vorname: 'Zoe', nachname: 'Fourcade', berechtigung: { 'Partner':'first', 'Manager': 'second' , Staff:'third'}, email: 'zoe.fourcade@muller.fr', handynummer: '0033 74456338',
+            festnetznummer: '0033 74456338'
+        }]
+    },
+    {
+        company: 'Novartis',
+        contacts: [{
+            vorname: 'Eric', nachname: 'Bonin', berechtigung: { 'Partner':'first', 'Manager': 'second' , Staff:'third'}, email: 'eric.bonin@muller.fr', handynummer: '0033 74456338',
+            festnetznummer: '0033 74456338'
+        }]
+    }
+    ]
+},
+{
+    country: 'Italy',
+    flag: "assets/img/italy.png",
+    companies: [{
+        company: 'Sanofi',
+        contacts: [{
+            vorname: 'Julie', nachname: 'Ray', berechtigung: { 'Partner':'first', 'Manager': 'second' , Staff:'third'}, email: 'eric.bonin@muller.fr', handynummer: '923545667786',
+            festnetznummer: ''
+        },
+        {
+            vorname: 'Julie', nachname: 'Ray', berechtigung: { 'Partner':'first', 'Manager': 'second' , Staff:'third'}, email: 'eric.bonin@muller.fr', handynummer: '923545667786',
+            festnetznummer: ''
+        }]
+    }
+    ]
+},
+
+{
+    country: 'Mexico',
+    flag: "assets/img/maxico.png",
+    companies: [{
+        company: 'Sanofi',
+        contacts: [{
+            vorname: 'Julie', nachname: 'Ray', berechtigung: { 'Partner':'first', 'Manager': 'second' , Staff:'third'}, email: 'eric.bonin@muller.fr', handynummer: '923545667786',
+            festnetznummer: ''
+        },
+        {
+            vorname: 'Julie', nachname: 'Ray',berechtigung: { 'Partner':'first', 'Manager': 'second' , Staff:'third'} , email: 'eric.bonin@muller.fr', handynummer: '923545667786',
+            festnetznummer: ''
+        }]
+    }
+    ]
+},
+{
+    country: 'Spain',
+    flag: "assets/img/spain.png",
+    companies: [{
+        company: 'Sanofi',
+        contacts: [{
+            vorname: 'Julie', nachname: 'Ray', berechtigung: { 'Partner':'first', 'Manager': 'second' , Staff:'third'}, email: 'eric.bonin@muller.fr', handynummer: '923545667786',
+            festnetznummer: ''
+        },
+        {
+            vorname: 'Julie', nachname: 'Ray', berechtigung: { 'Partner':'first', 'Manager': 'second' , Staff:'third'}, email: 'eric.bonin@muller.fr', handynummer: '923545667786',
+            festnetznummer: ''
+        }]
+    }
+    ]
+}
+];
